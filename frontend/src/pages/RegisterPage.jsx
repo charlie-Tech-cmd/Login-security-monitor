@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import AuthLayout from "../components/AuthLayout.jsx";
 import PasswordField from "../components/PasswordField.jsx";
-import { register } from "../services/authService.js";
+import { ApiError, register } from "../services/authService.js";
 import { getPasswordStatus, validateEmail } from "../utils/validation.js";
 
 export default function RegisterPage() {
@@ -73,10 +73,13 @@ export default function RegisterPage() {
               message: "We couldn't create your account. Please try again.",
             },
       );
-    } catch {
+    } catch (error) {
       setFeedback({
         type: "error",
-        message: "We couldn't create your account. Please try again.",
+        message:
+          error instanceof ApiError
+            ? error.message
+            : "Unable to reach the server. Please try again.",
       });
     } finally {
       setLoading(false);
