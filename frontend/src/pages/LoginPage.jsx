@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthLayout from "../components/AuthLayout.jsx";
 import PasswordField from "../components/PasswordField.jsx";
 import { login } from "../services/authService.js";
 import { validateEmail } from "../utils/validation.js";
 
 export default function LoginPage() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [touched, setTouched] = useState({});
@@ -41,14 +42,14 @@ export default function LoginPage() {
     setLoading(true);
     try {
       const succeeded = await login({ email: email.trim(), password });
-      setFeedback(
-        succeeded
-          ? { type: "success", message: "You're signed in." }
-          : {
-              type: "error",
-              message: "We couldn't sign you in. Please try again.",
-            },
-      );
+      if (succeeded) {
+        navigate("/home", { replace: true });
+      } else {
+        setFeedback({
+          type: "error",
+          message: "We couldn't sign you in. Please try again.",
+        });
+      }
     } catch {
       setFeedback({
         type: "error",
