@@ -84,7 +84,7 @@ export default function HomePage() {
               <span className="font-medium text-slate-800">{user.email}</span>.
             </p>
             <p className="mt-4 text-sm text-slate-500">
-              Your account has been verified by the authentication server.
+              Your account has been verified.
             </p>
           </>
         ) : null}
