@@ -97,6 +97,7 @@ This application includes:
 │   ├── index.html
 │   ├── package.json
 │   ├── vite.config.js                  # Vite configuration & /api proxy
+│   ├── .env.example                    # Frontend environment variables template
 │   └── README.md
 └── README.md
 ```
