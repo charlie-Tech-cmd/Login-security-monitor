@@ -4,7 +4,11 @@ from app.core.config import settings
 from app.core.jwt import create_access_token
 from app.core.security import hash_password, verify_password
 from app.services.login_monitor import LoginMonitor
-from app.services.user_store import InMemoryUserStore, UserRecord
+from app.services.user_store import (
+    InMemoryUserStore,
+    PostgresUserStore,
+    UserRecord,
+)
 
 
 @dataclass(frozen=True)
@@ -76,7 +80,7 @@ class AuthService:
         )
 
 
-user_store = InMemoryUserStore()
+user_store = PostgresUserStore()
 
 login_monitor = LoginMonitor(
     max_failed_attempts=settings.max_failed_attempts,
