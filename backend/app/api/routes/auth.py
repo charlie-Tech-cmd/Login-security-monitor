@@ -45,7 +45,7 @@ def login(request: LoginRequest) -> AuthResponse:
     if not result.success or not result.access_token:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Authentication failed. Check your credentials or try again later.",
+            detail=result.message or "Authentication failed. Check your credentials or try again later.",
             headers={"WWW-Authenticate": "Bearer"},
         )
 

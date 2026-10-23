@@ -1,8 +1,8 @@
 export const PASSWORD_REQUIREMENTS = [
   {
     id: "length",
-    label: "At least 8 characters",
-    test: (password) => password.length >= 8,
+    label: "Between 8 and 128 characters",
+    test: (password) => password.length >= 8 && password.length <= 128,
   },
   {
     id: "uppercase",

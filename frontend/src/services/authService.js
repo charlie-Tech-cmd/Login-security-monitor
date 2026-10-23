@@ -1,7 +1,7 @@
 const API_BASE_URL = (
-  import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000"
+  import.meta.env.VITE_API_BASE_URL ?? ""
 ).replace(/\/+$/, "");
-
+console.log(API_BASE_URL)
 export const AUTH_ENDPOINTS = {
   register: `${API_BASE_URL}/api/auth/register`,
   login: `${API_BASE_URL}/api/auth/login`,
@@ -30,10 +30,17 @@ async function request(endpoint, options = {}) {
   }
 
   if (!response.ok) {
-    const message =
-      typeof data.detail === "string"
-        ? data.detail
-        : `Request failed with status ${response.status}.`;
+    let message = `Request failed with status ${response.status}.`;
+
+    if (typeof data.detail === "string") {
+      message = data.detail;
+    } else if (Array.isArray(data.detail) && data.detail.length > 0) {
+      message = data.detail
+        .map((item) =>
+          typeof item === "object" && item?.msg ? item.msg : String(item),
+        )
+        .join("; ");
+    }
 
     throw new ApiError(message, response.status);
   }
@@ -61,7 +68,10 @@ export async function login(credentials) {
   });
 
   if (!data.access_token) {
-    throw new Error("The server did not return an authentication token.");
+    throw new ApiError(
+      "The server did not return an authentication token.",
+      500,
+    );
   }
 
   sessionStorage.setItem(TOKEN_KEY, data.access_token);
