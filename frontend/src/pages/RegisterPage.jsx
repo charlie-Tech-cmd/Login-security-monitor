@@ -61,18 +61,16 @@ export default function RegisterPage() {
 
     setLoading(true);
     try {
-      const succeeded = await register({ email: email.trim(), password });
-      setFeedback(
-        succeeded
-          ? {
-              type: "success",
-              message: "Your account has been created. You can now sign in.",
-            }
-          : {
-              type: "error",
-              message: "We couldn't create your account. Please try again.",
-            },
-      );
+      await register({ email: email.trim(), password });
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
+      setTouched({});
+      setSubmitted(false);
+      setFeedback({
+        type: "success",
+        message: "Your account has been created. You can now sign in.",
+      });
     } catch (error) {
       setFeedback({
         type: "error",

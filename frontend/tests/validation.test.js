@@ -9,6 +9,10 @@ test("password strength checks all five requirements", () => {
   assert.equal(getPasswordStatus("Abcdefgh!").requirements[3].met, false);
   assert.equal(getPasswordStatus("Abcdefg1").requirements[4].met, false);
   assert.equal(getPasswordStatus("Ab1!").requirements[0].met, false);
+  assert.equal(
+    getPasswordStatus("A".repeat(126) + "a1!").requirements[0].met,
+    false,
+  );
 });
 
 test("email validation rejects empty, malformed, and whitespace input", () => {

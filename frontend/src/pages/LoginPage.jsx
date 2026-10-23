@@ -41,15 +41,8 @@ export default function LoginPage() {
 
     setLoading(true);
     try {
-      const succeeded = await login({ email: email.trim(), password });
-      if (succeeded) {
-        navigate("/home", { replace: true });
-      } else {
-        setFeedback({
-          type: "error",
-          message: "We couldn't sign you in. Please try again.",
-        });
-      }
+      await login({ email: email.trim(), password });
+      navigate("/home", { replace: true });
     } catch (error) {
       setFeedback({
         type: "error",
