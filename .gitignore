@@ -9,8 +9,6 @@ __pycache__/
 venv/
 
 # Environment variables and secrets
-.env
-.env.*
 !.env.example
 
 # Local databases
@@ -23,5 +21,6 @@ venv/
 htmlcov/
 
 # IDE settings
-.vscode/
 .idea/
+config.bat
+node_modules
